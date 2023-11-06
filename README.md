@@ -39,6 +39,7 @@ The attached files are all the pipelines to do pCRE discovery.
 $ wget http://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
 $ bash ~/miniconda.sh -b -p $HOME/miniconda
 $ export PATH="$HOME/miniconda/bin:$PATH"
+$ source /RAID1/working/R425/lavakau/miniconda3/etc/profile.d/conda.sh
 $ conda create -n ml python==3.7.0 
 $ conda install biopython
 $ conda install matplotlib
@@ -56,6 +57,23 @@ You can adjust your negative data set with different ranges of logFC and adj. p-
 > Usually the numbers of positive and negative genes are differnet. Unbalence dataset will affect the ML biased toward the larger one (usually be negative genes). To solve this problem, we chose randomly downsizing 10 times to run ML in balenced status. The downsizing was applied sampling with replacement.
 ![ml](https://github.com/LavakauT/KmersDiscovery_MEME/assets/132649549/a5d43f8b-a660-467c-a349-80005da40dfd)
 
+
+```
+$ conda info --envs
+$ conda create -n R4.3.2
+$ conda activate R4.3.2
+$ conda install r-base==4.3.2
+
+$ conda install r-dplyr
+$ conda install r-pgirmess
+$ conda install r-stringr
+$ conda install r-tibble
+$ conda install r-universalmotif
+$ conda install r-tidyverse
+$ conda install r-ComplexHeatmap
+$ conda install r-circlize
+$ conda install r-gridtext
+```
 
   2. Download Genome fasta and annotation file
 
