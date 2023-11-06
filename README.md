@@ -65,12 +65,12 @@ $ conda activate R4.3.2
 $ conda install r-base==4.3.2
 
 $ conda install r-dplyr
-$ conda install r-pgirmess
+$ conda install -c conda-forge r-pgirmess
 $ conda install r-stringr
 $ conda install r-tibble
-$ conda install r-universalmotif
+$ conda install -c bioconda bioconductor-universalmotif
 $ conda install r-tidyverse
-$ conda install r-ComplexHeatmap
+#$ conda install -c bioconda bioconductor-complexheatmap
 $ conda install r-circlize
 $ conda install r-gridtext
 ```
