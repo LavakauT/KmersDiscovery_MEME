@@ -62,17 +62,28 @@ You can adjust your negative data set with different ranges of logFC and adj. p-
 $ conda info --envs
 $ conda create -n R4.3.2
 $ conda activate R4.3.2
-$ conda install r-base==4.3.2
+$ conda install -c conda-forge r-base==4.3.2
+$ conda install -c conda-forge r-biocmanager
 
-$ conda install r-dplyr
-$ conda install -c conda-forge r-pgirmess
-$ conda install r-stringr
-$ conda install r-tibble
-$ conda install -c bioconda bioconductor-universalmotif
-$ conda install r-tidyverse
-#$ conda install -c bioconda bioconductor-complexheatmap
-$ conda install r-circlize
-$ conda install r-gridtext
+
+$ conda install  -c conda-forge r-dplyr
+$ conda install -c conda-forge r-stringr
+$ conda install -c conda-forge r-tidyverse
+$ conda install -c conda-forge r-circlize
+
+
+# install constant package in conda env
+$ R
+>library(dplyr)
+>library(stringr)
+>library(tidyverse)
+>library(tibble)
+>library(BiocManager)
+
+# it spend much more time
+>BiocManager::install('universalmotif')
+>BiocManager::install("ComplexHeatmap")
+>BiocManager::install("gridtext")
 ```
 
   2. Download Genome fasta and annotation file
