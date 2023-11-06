@@ -151,7 +151,7 @@ $ for inp in folder/to/all/*.txt.fa
 > python pCRE_Finding_FET.py -pos full/path/to/pos.txt.fa -neg $neg -k wgcna/6mer.txt FDR Y -save $inp_pcre
 > done
 
-for inp in tom/e_1kb/*.fa.out; do neg=$inp; python pCRE_Finding_FET.py -pos tom/e_1kb/e_1kb.fa.out -neg $neg -k tom/6mer.txt FDR Y -save $neg.random ; done
+for inp in tom/e_1kb/*.fa.out; do neg=$inp; python pCRE_Finding_FET.py -pos tom/e_1kb/e_1kb.fa.out -neg $neg -k tom/6mer.txt FDR Y -save $neg_pcre ; done
 ```
 there're some parameters applied in this line, notice that FDR correction was run after enrichment test. Therefore, you should type -FDR Y:
 ```
