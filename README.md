@@ -35,6 +35,16 @@ The attached files are all the pipelines to do pCRE discovery.
 - python 3.7.0
 - scikit-learn 1.0.2
 - scipy 1.7.3
+```
+wget http://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
+bash ~/miniconda.sh -b -p $HOME/miniconda
+export PATH="$HOME/miniconda/bin:$PATH"
+conda install biopython
+conda install matplotlib
+conda install pandas
+conda install scikit-learn
+
+```
 
 # Kmer finding and ML predictions
 ## Get positive and negative gene lists from log FC data set
