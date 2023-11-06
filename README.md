@@ -138,3 +138,6 @@ the output:
  - save/file.txt.fa_FETresults.txt     Dataframe that k-mers counts and p-value which can help us filtering exactly match ones
 ```
 
+
+# Machine learning
+Use ML Pipeline (most recent version) here to get class predictions (see ML-pipeline https://github.com/bmmoore43/ML-Pipeline)
