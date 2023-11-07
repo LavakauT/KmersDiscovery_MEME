@@ -12,21 +12,6 @@ Two k-mers similarity will performed by Pearson correlation coefficient to filte
 
 
 
-
-
-# KmersDiscovery_MEME
-application of Motif Discovery and MEMESuit to search enriched pCRE on promoter sequences 
-
-The attached files are all the pipelines to do pCRE discovery.
-
-(1) Kmers: MotifDiscovery(Shiulab). Including the modification that I have done and R scripts to adjust our data.
-
-(2) MEME: From motif similarity to motif scaling with MEMEsuit. Including R scripts to collect motif information.
-
-(3) ML: Machine learning pipeline based on Sheila. Including the modification that I have done and R scripts to adjust our data.
-
-
-
 # Environment Requirements
 - biopython 1.78
 - matplotlib 3.5.3
@@ -91,6 +76,7 @@ $ R
 Download the gff file and genome fasta with the same version to your gene list.
 > For Marchantia polymorpha, we can download MpTak_v6.1r1.gff and MpTak_v6.1r1.genome.fasta in MarpolBase(https://marchantia.info/download/MpTak_v6.1/).
 
+
   3. Get promoter coordinates based on TSS and 5' UTR or only TSS
      
 
@@ -118,6 +104,33 @@ python full/path/to/FastaManager_modified.py -f get_stretch4 -coords [full/path/
 
 # TSS, output: gff_file.coord.fa
 python full/path/to/FastaManager_modified.py -f get_stretch4 -coords [full/path/to/prom.coord]  -fasta [full/path/to/genome.fa]
+```
+
+Due to unkown reson, the promoter sequences can map to correct gene name but its gene name include reduntant words such as chromosome and other infomation. We should remove them or you can not use prom.coord.fa/prom-5utr.coord.fa. Please enter R again and follow the script below to overwrite prom.coord.fa/prom-5utr.coord.fa:
+```
+# modify fasta file-------
+library(Biostrings)
+library(stringr)
+
+pro <- readDNAStringSet('/full/path/to/MpTak_v6.1r1.gff_prom-5utr.coord.fa')
+name <- names(pro)# extract gene name
+name <- str_replace_all(name, "\\.\\w[:blank:].*", "") # process gene name
+seq <- paste(pro) # extract promoter sequences
+dfa <- data.frame(name, seq) # re-combine seq and name
+
+# export fast function definition:
+writeFasta<-function(data, filename){
+  fastaLines = c()
+  for (rowNum in 1:nrow(data)){
+    fastaLines = c(fastaLines, as.character(paste(">", data[rowNum,"name"], sep = "")))
+    fastaLines = c(fastaLines,as.character(data[rowNum,"seq"]))
+  }
+  fileConn<-file(filename)
+  writeLines(fastaLines, fileConn)
+  close(fileConn)
+}
+
+writeFasta(dfa, '/full/path/to/MpTak_v6.1r1.gff_prom-5utr.coord.fa')
 ```
 
 5. Get fasta sequence to each gene list
