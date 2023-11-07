@@ -3,13 +3,16 @@ library(dplyr)
 # library(pgirmess)
 library(stringr)
 
-# getwd()
-dir <- 'path/to/output/downsizing/negative/gene/list/folder/'
+
+dir <- '/RAID1/working/R425/lavakau/'
+sub.dir <- 'sample_data/'
 middle <- 'neg'
-# list.files(paste0(dir, '/', 'sample_data'), pattern = '*.txt', full.names = TRUE)
-neg <- read.delim('path/to/full/negative/gene/list')
+neg <- read.delim('/RAID1/working/R425/lavakau/pCRE/sample_data/NN.txt')
 n.neg <- nrow(neg)
-pos <- read.delim('path/to/full/positive/gene/list')
+group <- list.files(paste0(dir, '/', 'sample_data'), pattern = '*.txt', full.names = TRUE)
+
+
+pos <- read.delim('/RAID1/working/R425/lavakau/pCRE/sample_data/UU.txt')
 n.pos <- nrow(pos)
 
 for ( i in 1:10){
@@ -20,7 +23,7 @@ for ( i in 1:10){
   
   # output result
   write.table(df, 
-              paste0(dir, paste('neg', number, sep = '_'), '.txt'),
+              paste0(dir, sub.dir, paste('neg', number, sep = '_'), '.txt'),
               row.names = F,
               quote = F,
               sep = '\t')
