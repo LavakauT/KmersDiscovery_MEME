@@ -39,7 +39,7 @@ $ conda install scikit-learn
 
 You can adjust your negative data set with different ranges of logFC and adj. p-val. Select the range which is acceptable to ML results but please keep applying the same range in different datasets.
 
-> Usually the numbers of positive and negative genes are differnet. Unbalence dataset will affect the ML biased toward the larger one (usually be negative genes). To solve this problem, we chose randomly downsizing 10 times to run ML in balenced status. The downsizing was applied sampling with replacement.
+> Usually the numbers of positive and negative genes are differnet. Unbalence dataset will affect the ML biased toward the larger one (usually be negative genes). To solve this problem, we chose randomly downsizing 10 times to run ML in balenced status. The downsizing was applied sampling with replacement. Please run down_sizing.R to get the subsets of negative gene lists.
 ![ml](https://github.com/LavakauT/KmersDiscovery_MEME/assets/132649549/a5d43f8b-a660-467c-a349-80005da40dfd)
 
 
@@ -180,6 +180,9 @@ the output:
  - save/file.txt.fa_df_p0.01.txt       Dataframe that goes into ML-pipeline
  - save/file.txt.fa_FETresults.txt     Dataframe that k-mers counts and p-value which can help us filtering exactly match ones
 ```
+
+# Optional: PCC filtering
+k-mers similarity will performed by Pearson correlation coefficient to filter out exactly matched k-mers with PCC > 0.9. the one with lower adjusted P value (show in save/file.txt.fa_FETresults.txt) was retained. Please run pcc_filtering.R to rewrite all save/file.txt.fa_df_p0.01.txt files, then goes to machine learning part.
 
 
 # Machine learning
