@@ -3,9 +3,10 @@ library(dplyr)
 # library(pgirmess)
 library(stringr)
 
-
+# getwd()
 dir <- 'path/to/output/downsizing/negative/gene/list/folder/'
 middle <- 'neg'
+# list.files(paste0(dir, '/', 'sample_data'), pattern = '*.txt', full.names = TRUE)
 neg <- read.delim('path/to/full/negative/gene/list')
 n.neg <- nrow(neg)
 pos <- read.delim('path/to/full/positive/gene/list')
