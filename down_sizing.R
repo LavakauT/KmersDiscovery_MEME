@@ -4,27 +4,32 @@ library(dplyr)
 library(stringr)
 
 
-dir <- '/RAID1/working/R425/lavakau/'
+dir <- '/RAID1/working/R425/lavakau/pCRE/'
 sub.dir <- 'sample_data/'
+sub.dir2 <- 'sample_data'
 middle <- 'neg'
-neg <- read.delim('/RAID1/working/R425/lavakau/pCRE/sample_data/NN.txt')
+neg <- read.delim(paste0(dir, sub.dir, 'other/', 'NN.txt'))
 n.neg <- nrow(neg)
-group <- list.files(paste0(dir, '/', 'sample_data'), pattern = '*.txt', full.names = TRUE)
+groups <- list.files(paste0(dir, sub.dir2), pattern = '*.txt', full.names = FALSE)
 
-
-pos <- read.delim('/RAID1/working/R425/lavakau/pCRE/sample_data/UU.txt')
-n.pos <- nrow(pos)
-
-for ( i in 1:10){
-  number <- i
-  set.seed(number)
-  random.neg <- sample(seq_len(n.neg), size = n.pos)
-  df <- neg[random.neg,]
+for (j in 1:length(groups)) {
+  group <- groups[j]
+  group_name <- str_replace(group, '.txt', '')
+  pos <- read.delim(paste0(dir, sub.dir, group_name, '.txt'))
+  n.pos <- nrow(pos)
   
-  # output result
-  write.table(df, 
-              paste0(dir, sub.dir, paste('neg', number, sep = '_'), '.txt'),
-              row.names = F,
-              quote = F,
-              sep = '\t')
+  for ( i in 1:10){
+    number <- i
+    set.seed(number)
+    random.neg <- sample(seq_len(n.neg), size = n.pos)
+    df <- neg[random.neg,]
+    
+    # output result
+    write.table(df, 
+                paste0(dir, sub.dir, group_name, '/',
+                       paste('neg', number, sep = '_'), '.txt'),
+                row.names = F,
+                quote = F,
+                sep = '\t')
+  }
 }
