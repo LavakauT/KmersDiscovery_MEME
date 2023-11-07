@@ -186,4 +186,4 @@ k-mers similarity will performed by Pearson correlation coefficient to filter ou
 
 
 # Machine learning
-Use ML Pipeline (most recent version) here to get class predictions (see ML-pipeline https://github.com/bmmoore43/ML-Pipeline)
+Use ML Pipeline (most recent version) here to get class predictions (see ML-pipeline https://github.com/bmmoore43/ML-Pipeline and https://github.com/LavakauT/ML-pipeline)
