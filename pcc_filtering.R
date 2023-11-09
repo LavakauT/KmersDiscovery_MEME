@@ -75,7 +75,7 @@ for (i in 1:10) {
     group_by(motif) %>% 
     summarise(pvalue = min(pvalue))
   
-  write.delim(sub.com3,
+  write.table(sub.com3,
               paste0(dir, file_name, '_', i,'_distinct_pcc_enriched_kmer', '.txt'),
               row.names = F,
               quote = F,
@@ -84,7 +84,7 @@ for (i in 1:10) {
   df3 <- read.delim(paste0(dir, filenames2[i]))
   df3 <- cbind(df3[,1:2], df3[,sub.com3$motif])
   
-  write.delim(df3,
+  write.table(df3,
               paste0(dir, filenames2[i]),
               row.names = F,
               quote = F,
