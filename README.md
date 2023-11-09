@@ -86,14 +86,14 @@ Which kind of promoter sequences you want depends on you. Please keep the same k
 
 get promoter coordinates based on transcription start site (TSS) and 5'UTR
 ```
-python full/path/to/FastaManager_modified.py -f gff_prom_to_coord2 -gff [full/path/to/gff file]
-# output: gff_file_prom-5utr.coord
+python full/path/to/FastaManager_modified.py -f gff_prom_to_coord_5utr -gff [full/path/to/gff file]
+# output: gff_file.coord
 ```
 
 get promoter coordinates based on transcription start site (TSS)
 ```
-python full/path/to/FastaManager_modified.py -f gff_prom_to_coord_5utr -gff [full/path/to/gff file]
-# output: gff_file.coord
+python full/path/to/FastaManager_modified.py -f gff_prom_to_coord2 -gff [full/path/to/gff file]
+# output: gff_file_prom-5utr.coord
 ```
 
 
