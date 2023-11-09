@@ -181,6 +181,10 @@ the output:
  - save/file.txt.fa_FETresults.txt     Dataframe that k-mers counts and p-value which can help us filtering exactly match ones
 ```
 
+# Optional: 1,0 to pos,neg convertor
+Please follow [pos_neg_conversion.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/pos_neg_conversion.R)
+
+
 # Optional: PCC filtering
 k-mers similarity will performed by Pearson correlation coefficient to filter out exactly matched k-mers with PCC > 0.9. the one with lower adjusted P value (show in save/file.txt.fa_FETresults.txt) was retained. Please run [pcc_filtering.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/pcc_filtering.R) to rewrite all save/file.txt.fa_df_p0.01.txt files, then goes to machine learning part.
 
