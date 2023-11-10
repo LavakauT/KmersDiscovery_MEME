@@ -12,6 +12,7 @@ library(pgirmess)
 
 
 dir <- '/full/path/to/all/pCRE/folder'
+middle <- 'neg'
 folder <- list.dirs(dir,
                     full.names = FALSE,
                     recursive = FALSE)
