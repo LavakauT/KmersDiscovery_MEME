@@ -12,7 +12,7 @@ library(pgirmess)
 
 
 dir <- '/full/path/to/all/pCRE/folder'
-dir <- '/full/path/to/all/ML_master/folder'
+dir2 <- '/full/path/to/all/ML_master/folder'
 middle <- 'neg'
 folder <- list.dirs(dir,
                     full.names = FALSE,
