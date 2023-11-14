@@ -12,6 +12,7 @@ library(pgirmess)
 
 
 dir <- '/full/path/to/all/pCRE/folder'
+dir <- '/full/path/to/all/ML_master/folder'
 middle <- 'neg'
 folder <- list.dirs(dir,
                     full.names = FALSE,
@@ -76,7 +77,7 @@ for (x in 1:length(folder)) {
       summarise(pvalue = min(pvalue))
     
     write.table(sub.com3,
-                paste(dir, folder_name,
+                paste(dir2, folder_name,
                       paste0(middle, '_', folder_name, '_', i,'_distinct_pcc_enriched_kmer', '.txt'),
                       sep = '/'),
                 row.names = F,
@@ -87,7 +88,7 @@ for (x in 1:length(folder)) {
     df3 <- cbind(df3[,1:2], df3[,sub.com3$motif])
     
     write.table(df3,
-                paste(dir, folder_name, filenames2[i], sep = '/'),
+                paste(dir2, folder_name, filenames2[i], sep = '/'),
                 row.names = F,
                 quote = F,
                 sep = '\t')
