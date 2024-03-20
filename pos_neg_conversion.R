@@ -1,6 +1,6 @@
-# loop code for change Class annotation from 1,0 to pos,neg after pCRE-------
+#### loop code for change Class annotation from 1,0 to pos,neg after pCRE ####
+#### load packages ####
 library(dplyr)
-# library(pgirmess)
 library(stringr)
 
 
@@ -10,7 +10,6 @@ folder <- list.dirs(dir,
                     recursive = FALSE)
 middle <- 'neg'
 ends <- '.txt.fa.pcre_df_p0.01.txt'
-
 
 
 for (j in 1:length(folder)) {
