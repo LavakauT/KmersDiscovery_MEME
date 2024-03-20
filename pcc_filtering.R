@@ -1,14 +1,10 @@
-# filter: one kmer match perfectly to the other one or pcc > 0.9-----
-## ∆ CONSENSUS motif comparison------------
+#### filter: one kmer match perfectly to the other one or pcc > 0.9 ####
+#### load packages ####
 library(dplyr)
 library(tibble)
 library(universalmotif)
 library(stringr)
 library(tidyverse)
-# library(ComplexHeatmap)
-library(circlize)
-library(gridtext)
-library(pgirmess)
 
 
 dir <- '/full/path/to/all/pCRE/folder'
@@ -27,9 +23,6 @@ for (x in 1:length(folder)) {
   filenames2 <- list.files(paste(dir, folder[x], sep = '/'),
                            pattern="*_df_p0.01.txt",
                            full.names=FALSE)
-  
-  # head(filenames)
-  # head(filenames2)
   
   for (i in 1:10) {
     df2 <- read.delim(paste(dir, folder_name, filenames[i], sep = '/')) %>%
