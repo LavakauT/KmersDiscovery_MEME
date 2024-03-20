@@ -24,7 +24,7 @@ Two k-mers similarity will performed by Pearson correlation coefficient to filte
 $ wget http://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
 $ bash ~/miniconda.sh -b -p $HOME/miniconda
 $ export PATH="$HOME/miniconda/bin:$PATH"
-$ source /RAID1/working/R425/lavakau/miniconda3/etc/profile.d/conda.sh
+# source conda.sh
 $ conda create -n ml python==3.7.0 
 $ conda install biopython
 $ conda install matplotlib
