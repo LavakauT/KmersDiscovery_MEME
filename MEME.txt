@@ -1,56 +1,0 @@
-# the default setting of AME in MEME
-
-ame --verbose 1 --oc [save folder] --scoring avg --method fisher --hit-lo-fraction 0.25 --evalue-report-threshold 10.0 --control --shuffle-- --kmer 2 [full file path and file name] [path to ArabidopsisDAPv1.meme]
-
-
-
-
-
-
------------Motif/TF retrieving from AME enrichment analysis--------
-Plant_TFDB: http://planttfdb.gao-lab.org/download.php
-MEME: https://meme-suite.org/meme/db/motifs
-
-# /R4.2.2tf.db.ara <- read.delim('Ath_TF_list_from_Plant_TFDB')tf.db.ara <- tf.db.ara[,-1] ## tf db from arabidopsisdap.db.ara <- read.csv('dap_mortif.csv_from_MEME')dap.db.1 <- cbind(dap.db.ara$AT_ID, dap.db.ara$Family)dap.db <- data.frame(cbind(dap.db.1, dap.db.ara$DAP_ID))colnames(dap.db) <- c('Gene_ID', 'Family', 'Dap_ID')dap.db <- dap.db %>% distinct(Gene_ID, .keep_all = TRUE)library(tidyverse)dap.tf.db <- full_join(dap.db, tf.db.ara, by = 'Gene_ID')dap.tf.db <- dap.tf.db %>% distinct(Gene_ID, .keep_all = TRUE)colnames(dap.tf.db) <- c('Gene_ID', 'Family', 'Dap_ID', 'TF')
-
-
-## map Dap-seq and TFBM data to AME results
-## screen shot of AME.tsv
-
-motif_ID	motif_alt_ID	consensus	p-value	adj_p-value
-C2C2dof_tnt.AT1G47655_colamp_a_m1	AT1G47655	YYTTTTDCTTTTTBT	3.02E-137	5.89E-134
-REM_tnt.REM19_colamp_a_m1	REM19	WTDWMAAAAAAAAAAAAAAAA	6.85E-116	8.12E-113
-C2C2dof_tnt.OBP3_col_a_m1	OBP3	TTTWCTTTTTHHYTTTTTTTT	3.54E-112	5.69E-109
-BBRBPC_tnt.BPC1_colamp_a_m1	BPC1	CTCTYTCTCTCTCTC	5.06E-108	2.97E-105
-
-
-
-# /R4.2.2
-df <- "full_path_to_ame.tsv"name <- df[,2]
-library(stringr)
-name <- str_replace_all(name, '\\_m1', "")name <- data.frame(name)
-
-df <- cbind(name, df$adj_p-value)colnames(df) <- c('Dap_ID', 'adj.pvalue')
-df.dap.tf <- left_join(df, dap.tf.db, by = 'Dap_ID')df.dap.tf<- df.dap.tf %>% 
-	distinct(Dap_ID, .keep_all = TRUE) %>%
-	filter(Gene_ID != "") %>%
-	filter(Family != "") %>% 
-	filter(TF != "")
-df.dap.tf$group <- 'prefix_to_this_data'df.dap <- data.frame(df.dap.tf$Family)df.dap.value <- data.frame(as.numeric(df.dap.tf$adj.pvalue))df.dap <- data.frame(cbind(df.dap, df.dap.value))colnames(df.dap) <- c('Family', 'pvalue')df.dap <- df.dap %>%  group_by(Family) %>%  summarise_all(median) %>%  filter(Family != "")
-df.dap$group <- 'prefix' ## motif resultdf.tf <- data.frame(df.dap.tf$TF)df.tf <- data.frame(cbind(df.tf, df.dap.value))colnames(tdf.tf) <- c('TF', 'pvalue')df.tf <- df.tf %>%  group_by(TF) %>%  summarise_all(median) %>%  filter(TF != "")
-df.tf$group <- 'prefix' ## TF result
---------------------------------------------------------------
-
-
-We can input the found motif to do fimo as kind of kmers searching
-
-# the thresh set 1.0 means all taking, adjust by how strict you want,
-Default is 0.0001 as scan individual match in each promoter
-fimo --oc [output_path] --verbosity 1 --thresh 1.0 [motif_find_from_AME] [fasta_file_from_promoter]
-
-
-
-# then you can transfer the matching result into one-hot dataframe
-
-
-
