@@ -1,106 +1,0 @@
-pCRE
-
-Postive gene: log2(FC) >= 1.0  & padl < 0.05 | log2(FC) <= -1.0  & padl < 0.05
-Negative gene: -1.0 < log2(FC) < 1.0 & padj >0.05 
-
-
-
-(1) get promoter coordinates based on TSS
-python FastaManager_modified.py -f gff_prom_to_coord -gff [gff file]
-
-
-
-Modified version of FastaManager.py is changed with this part:
-
-# Convert GFF to coord file for 1000bp upstream of genes
-	#
-	def gff_prom_to_coord2(self,gff):
-		inp = open(gff)
-		oup = open(gff+"_prom.coord","w")
-		inl = inp.readline()
-		tmp_list=[]
-		count= 0
-		while inl != "":
-			#print (inl)
-			T = inl.strip().split("\t") # tokens
-			if len(T) > 6:
-			    C = T[0]					# chr
-			    #print (T[2])
-			    if T[2] == 'mRNA' and count== 0:
-			        #count= count+1
-			        tmp_list=[]
-			        if T[6] == "+":				# orientation
-			            L = T[3]				# left coord
-			            R = T[4]				# right coord
-			            prom= int(L)-1500                   #get 1500 bp upstream of L
-			        else:
-			            L = T[4]
-			            R = T[3]
-			            prom = int(L)+1500
-			        #print (prom, L)
-			        if prom > 0:
-			            tmp_list=[L, prom]
-			        else:
-			            tmp_list=[L, 0]
-			    #if T[2]=='mRNA' and count== 1:            #only get the protein name
-			        N = ""				     # sequence name
-			        n = T[-1].split(";")     # get gene name
-			        #print(n)
-			        if "Name" in T[-1]:			# has Name tag, # refers to last item in list
-			            for j in n:
-			                if "Name" in j:
-			                    N = j.split("=")[1]
-			                    #print(N)
-			                    break
-			                elif T[-1] != "":			# no name tag but not empty, use 1st
-			                    N = n[0].split("=")[1]
-			                else:
-			                    print ("No desc:",T)
-			        if N != "":
-			            #print(tmp_list)
-			            L2= tmp_list[0]
-			            prom2= tmp_list[1]
-			            oup.write("%s\t%s,%s\t%s\n" % (C,prom2,L2,N))
-			        count = 0
-			
-			else:
-			    pass
-			    #print(T, "line not used")
-			inl = inp.readline()
-			
-		print ("Done!")
-
-
-
-
-(2) get fasta sequence using coords file and genome fasta
-python FastaManager.py -f get_stretch4 -coords [prom.coord]  -fasta [genome.fa] 
-
-
-
-
-
-(3) Set up your input files
-python FastaManager.py -f getseq2 -fasta [promoter sequences] -name [id]
-
-∆ notice the name in fast file and gen list
-∆ modify name in fasta file
-# /R4.2.2
-library(Biostrings)
-library(stringr) pro <- readDNAStringSet('fasta_file')name <- names(pro)name <- str_replace_all.....# modify based on your caseseq <- paste(pro)dfa <- data.frame(name, seq)writeFasta<-function(data, filename){  fastaLines = c()  for (rowNum in 1:nrow(data)){    fastaLines = c(fastaLines, as.character(paste(">", data[rowNum,"name"], sep = "")))    fastaLines = c(fastaLines,as.character(data[rowNum,"seq"]))  }  fileConn<-file(filename)  writeLines(fastaLines, fileConn)  close(fileConn)}writeFasta(dfa, 'fasta_file_full_path')
-
-
-
-(4)get kmers
-
-Put all the promoter fasta from negative genes in one folder
-
-$ for inp in *.txt.fa
-> do
-> neg=$inp
-> python pCRE_Finding_FET.py -pos [postive_fasta_full_path] -neg $neg -k 6mer.txt FDR Y -save out
-> done
-
-
-
-
