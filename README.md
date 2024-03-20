@@ -6,9 +6,9 @@ Original pipeline used python for processing dataframes and R for running Random
 
 ## modification concept: Dr. Liu Ming-Jung and Dr. Wu Ting-Ying
 
-Two k-mers were both significantly enriched and one k-mer sequence exactly matched the other one, only the one with lower adjusted P value was retained (https://academic.oup.com/plcell/article/30/7/1445/6100070).
+If two k-mers were both significantly enriched and one k-mer sequence exactly matched the other one, only the one with the lower adjusted P value was retained (https://academic.oup.com/plcell/article/30/7/1445/6100070).
 
-Two k-mers similarity will performed by Pearson correlation coefficient to filter out exactly matched k-mers with PCC > 0.9. the one with lower adjusted P value was retained.
+The similarity between two k-mers will be determined using the Pearson correlation coefficient (PCC), and k-mers with a PCC lower than 0.9 will be filtered out. Among these, only the k-mer with the lower adjusted P value will be retained.
 
 
 
@@ -39,7 +39,7 @@ $ conda install scikit-learn
 
 You can adjust your negative data set with different ranges of logFC and adj. p-val. Select the range which is acceptable to ML results but please keep applying the same range in different datasets.
 
-> Usually the numbers of positive and negative genes are differnet. Unbalence dataset will affect the ML biased toward the larger one (usually be negative genes). To solve this problem, we chose randomly downsizing 10 times to run ML in balenced status. The downsizing was applied sampling with replacement. Please run [down_sizing.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/down_sizing.R) to get the subsets of negative gene lists.
+> Typically, the numbers of positive and negative genes in datasets are different, leading to an imbalance that can bias machine learning models toward the larger class (usually negative genes). To address this issue, we randomly downsize the dataset 10 times to achieve a balanced status before running machine learning algorithms. The downsizing process involves sampling with replacement. Please run [down_sizing.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/down_sizing.R) to get the subsets of negative gene lists.
 ![ml](https://github.com/LavakauT/KmersDiscovery_MEME/assets/132649549/a5d43f8b-a660-467c-a349-80005da40dfd)
 
 
@@ -65,7 +65,6 @@ $ R
 >library(tibble)
 >library(BiocManager)
 
-# it spend much more time
 >BiocManager::install('universalmotif')
 >BiocManager::install("ComplexHeatmap")
 >BiocManager::install("gridtext")
@@ -73,7 +72,7 @@ $ R
 
   2. Download Genome fasta and annotation file
 
-Download the gff file and genome fasta with the same version to your gene list.
+Please download the GFF file and genome FASTA corresponding to the version of your gene list.
 > For Marchantia polymorpha, we can download MpTak_v6.1r1.gff and MpTak_v6.1r1.genome.fasta in MarpolBase(https://marchantia.info/download/MpTak_v6.1/).
 
 
@@ -82,7 +81,7 @@ Download the gff file and genome fasta with the same version to your gene list.
 
 ![pro_cor](https://github.com/LavakauT/KmersDiscovery_MEME/assets/132649549/33cffc1a-255a-4dac-8369-12fe3b401b77)
 
-Which kind of promoter sequences you want depends on you. Please keep the same kind on positive/negative datasets. In our dataset, we apply the promoter coordinates based on TSS and 5'UTR from DEGs in RNA-seq. Please also notice I modify the original FastaManager.py into FastaManager_modified.py with custom length setting (see in kmers.txt)
+The choice of promoter sequences depends on your preference. Please ensure that the same kind is used for both positive and negative datasets. In our dataset, we use promoter coordinates based on Transcription Start Site (TSS) and 5'UTR from Differentially Expressed Genes (DEGs) in RNA-seq. Additionally, please note that I have modified the original FastaManager.py into FastaManager_modified.py, which includes custom length settings.
 
 get promoter coordinates based on transcription start site (TSS) and 5'UTR
 ```
@@ -106,7 +105,7 @@ python full/path/to/FastaManager_modified.py -f get_stretch4 -coords [full/path/
 python full/path/to/FastaManager_modified.py -f get_stretch4 -coords [full/path/to/prom.coord]  -fasta [full/path/to/genome.fa]
 ```
 
-Due to unkown reson, the promoter sequences can map to correct gene name but its gene name include reduntant words such as chromosome and other infomation. We should remove them or you can not use prom.coord.fa/prom-5utr.coord.fa. Please enter R again and follow the script below to overwrite prom.coord.fa/prom-5utr.coord.fa:
+To prevent the promoter sequences from mapping to incorrect gene annotation, which may include redundant words or other irrelevant information, it's important to clean up the gene annotation. Otherwise, it may lead to inaccurate mapping or interpretation of the data. Please enter R again and follow the script below to overwrite prom.coord.fa/prom-5utr.coord.fa:
 ```
 # modify fasta file-------
 library(Biostrings)
@@ -186,7 +185,7 @@ Please follow [pos_neg_conversion.R](https://github.com/LavakauT/KmersDiscovery_
 
 
 # Optional: PCC filtering
-k-mers similarity will performed by Pearson correlation coefficient to filter out exactly matched k-mers with PCC > 0.9. the one with lower adjusted P value (show in save/file.txt.fa_FETresults.txt) was retained. Please run [pcc_filtering.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/pcc_filtering.R) to rewrite all save/file.txt.fa_df_p0.01.txt files, then goes to machine learning part.
+Please run [pcc_filtering.R](https://github.com/LavakauT/KmersDiscovery_MEME/blob/main/pcc_filtering.R) to rewrite all save/file.txt.fa_df_p0.01.txt files, then go to machine learning part.
 
 
 # Machine learning
