@@ -1,6 +1,6 @@
-# get randomly negative data set-------
+#### get randomly negative data set ####
+#### load packages ####
 library(dplyr)
-# library(pgirmess)
 library(stringr)
 
 
@@ -11,6 +11,7 @@ middle <- 'neg'
 neg <- read.delim(paste0(dir, sub.dir, 'other/', 'NN.txt'))
 n.neg <- nrow(neg)
 groups <- list.files(paste0(dir, sub.dir2), pattern = '*.txt', full.names = FALSE)
+
 
 for (j in 1:length(groups)) {
   group <- groups[j]
